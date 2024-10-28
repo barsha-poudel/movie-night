@@ -30,3 +30,19 @@ export const getMovieDetails = async ({ movieId }) => {
     return null;
   }
 };
+export const getSimilarMovie = async ({ movieId }) => {
+  try {
+    const response = await axios.get(
+      `https://api.themoviedb.org/3/movie/${movieId}/similar?api_key=${API_KEY}`
+    );
+    if (response && response.data) {
+      return response.data;
+    } else {
+      console.error("No data received from the API");
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching movie details:", error);
+    return null;
+  }
+};
