@@ -3,7 +3,8 @@ import { FaSearch } from "react-icons/fa";
 import { RiMenu3Line } from "react-icons/ri";
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import { fetchPopularMovies } from "../../../Services/event";
+import { fetchPopularMovies, getMovieDetails } from "../../../Services/event";
+import { useRouter } from "next/navigation";
 
 function NavBar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -11,6 +12,7 @@ function NavBar() {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredMovies, setFilteredMovies] = useState([]);
   const imageBaseUrl = "https://image.tmdb.org/t/p/w500";
+  const router = useRouter();
 
   useEffect(() => {
     const getMovies = async () => {
@@ -28,9 +30,32 @@ function NavBar() {
     );
   }, [searchQuery, movies]);
 
-  const handleMovieClick = (movie) => {
-    setSelectedMovie(movie); 
-    setSearchQuery(""); 
+  const handleMovieClick = async (movieId) => {
+    console.log("Requested Movie ID:", movieId);
+    const movieDetails = await getMovieDetails({ movieId });
+    if (movieDetails) {
+      router.push(`/DetailPage/${movieId}`);
+    } else {
+      console.error("Failed to fetch movie details");
+    }
+  };
+  
+
+  const handleSearch = async (movieId) => {
+    const movieDetails = await getMovieDetails({ movieId });
+    if (movieDetails) {
+      // Do something with movieDetails, like navigating to the detail page
+      router.push(`/DetailPage/${movieId}`);
+    } else {
+      console.error("Failed to fetch movie details");
+    }
+  };
+  
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
   };
 
   return (
@@ -63,8 +88,9 @@ function NavBar() {
                 className="w-full px-4 py-2 pr-12 rounded-full bg-white focus:outline-none"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
+                onKeyDown={handleKeyDown} // Call search on Enter key
               />
-              <button className="absolute right-4 top-2">
+              <button className="absolute right-4 top-2" onClick={handleSearch}>
                 <FaSearch className="text-xl text-gray-600" />
               </button>
               {searchQuery && (
@@ -73,13 +99,14 @@ function NavBar() {
                     <div
                       key={movie.id}
                       className="p-2 hover:bg-gray-200 cursor-pointer flex gap-4"
+                      onClick={() => handleMovieClick(movie.id)}
                     >
                       <img
                         alt="logo"
                         src={`${imageBaseUrl}${movie.poster_path}`}
                         className="rounded-full h-6 w-6"
                       />
-                      <p> {movie.title}</p>
+                      <p>{movie.title}</p>
                     </div>
                   ))}
                 </div>
@@ -118,8 +145,9 @@ function NavBar() {
               className="w-full px-4 py-2 pr-12 rounded-full bg-white focus:outline-none"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyDown={handleKeyDown} // Call search on Enter key
             />
-            <button className="absolute right-4">
+            <button className="absolute right-4" onClick={handleSearch}>
               <FaSearch className="text-xl text-gray-600" />
             </button>
           </div>
@@ -129,14 +157,14 @@ function NavBar() {
                 <div
                   key={movie.id}
                   className="p-2 hover:bg-gray-200 cursor-pointer flex gap-4"
-                 
+                  onClick={() => handleMovieClick(movie.id)}
                 >
                   <img
                     alt="logo"
                     src={`${imageBaseUrl}${movie.poster_path}`}
                     className="rounded-full h-6 w-6"
                   />
-                  <p> {movie.title}</p>
+                  <p>{movie.title}</p>
                 </div>
               ))}
             </div>
