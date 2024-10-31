@@ -5,10 +5,7 @@ import { FaRegHeart, FaHeart } from "react-icons/fa";
 
 function SimilarMovieCard({ movieId, setSelectedMovie }) {
   const [similarMovies, setSimilarMovies] = useState([]);
-  const [likedMovies, setLikedMovies] = useState(() => {
-    const savedLikedMovies = localStorage.getItem("likedMovies");
-    return savedLikedMovies ? JSON.parse(savedLikedMovies) : [];
-  });
+  const [likedMovies, setLikedMovies] = useState([]);
   const [loading, setLoading] = useState(true);
   const imageBaseUrl = "https://image.tmdb.org/t/p/w500";
 
@@ -29,6 +26,11 @@ function SimilarMovieCard({ movieId, setSelectedMovie }) {
 
     fetchSimilarMovies();
   }, [movieId]);
+
+  useEffect(()=>{
+    const savedLikedMovies = localStorage.getItem("likedMovies");
+    setLikedMovies(() => savedLikedMovies ? JSON.parse(savedLikedMovies) : []);
+  },[])
 
   const handleToggleLike = (movie) => {
     const movieData = {

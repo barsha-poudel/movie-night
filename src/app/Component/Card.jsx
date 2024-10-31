@@ -4,13 +4,10 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
 
-function MovieRatingCard({matchedMovies}) {
+function MovieRatingCard() {
   const router = useRouter();
   const [movies, setMovies] = useState([]);
-  const [likedMovies, setLikedMovies] = useState(() => {
-    const savedLikedMovies = localStorage.getItem("likedMovies");
-    return savedLikedMovies ? JSON.parse(savedLikedMovies) : [];
-  });
+  const [likedMovies, setLikedMovies] = useState([]);
 
   const imageBaseUrl = "https://image.tmdb.org/t/p/w500";
 
@@ -21,6 +18,11 @@ function MovieRatingCard({matchedMovies}) {
     };
     getMovies();
   }, []);
+
+  useEffect(()=>{
+    const savedLikedMovies = localStorage.getItem("likedMovies");
+    setLikedMovies(() => savedLikedMovies ? JSON.parse(savedLikedMovies) : []);
+  },[])
 
   const handleMoreDetailsClick = async (movieId) => {
     const details = await getMovieDetails({ movieId });
