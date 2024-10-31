@@ -2,8 +2,7 @@
 import NavBar from "./Component/Navbar";
 import HeroSection from "./Component/HeroSection";
 import MovieRatingCard from "./Component/Card";
-import { useEffect } from "react";
-import { fetchPopularMovies } from "../../Services/event";
+
 
 export default function Home() {
   return (

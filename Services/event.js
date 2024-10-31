@@ -1,11 +1,11 @@
 import axios from "axios";
 
-const API_KEY = "0495430129e2b5effe471116f8e7e303";
-const POPULAR_MOVIE_URL = `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}`;
+const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
+const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export const fetchPopularMovies = async () => {
   try {
-    const response = await axios.get(POPULAR_MOVIE_URL);
+    const response = await axios.get(BASE_URL+`/popular?api_key=${API_KEY}`);
     const popularMovies = response.data.results;
     console.log(popularMovies);
     return popularMovies;
@@ -17,7 +17,7 @@ export const fetchPopularMovies = async () => {
 export const getMovieDetails = async ({ movieId }) => {
   try {
     const response = await axios.get(
-      `https://api.themoviedb.org/3/movie/${movieId}?api_key=${API_KEY}`
+      BASE_URL+`/${movieId}?api_key=${API_KEY}`
     );
     if (response && response.data) {
       return response.data;
@@ -33,7 +33,7 @@ export const getMovieDetails = async ({ movieId }) => {
 export const getSimilarMovie = async ({ movieId }) => {
   try {
     const response = await axios.get(
-      `https://api.themoviedb.org/3/movie/${movieId}/similar?api_key=${API_KEY}`
+      BASE_URL+`/${movieId}/similar?api_key=${API_KEY}`
     );
     if (response && response.data) {
       return response.data;
