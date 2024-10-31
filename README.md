@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Movie Night Application
+
+## Overview
+
+Movie Night is a Next.js application that allows users to discover popular movies, search for specific titles, and manage their list of liked movies. This application utilizes The Movie Database (TMDb) API to fetch movie details and provides a user-friendly interface for movie enthusiasts.
+
+## Features
+
+- **Search Functionality**: Easily search for movies by title.
+- **Liked Movies**: Save your favorite movies and view them in the Liked Movies section.
+- **Responsive Design**: Fully responsive layout that works on mobile and desktop devices.
+- **Dynamic Routing**: Navigate to detailed pages for each movie.
+- **Local Storage**: Persist liked movies using local storage.
+
+## Tech Stack
+
+- **Frontend**: Next.js, React, Tailwind CSS
+- **API**: The Movie Database (TMDb) API
+- **State Management**: React Hooks
 
 ## Getting Started
 
-First, run the development server:
+To run the application locally, follow these steps:
 
-```bash
+### Prerequisites
+
+- Node.js (version 14 or later)
+- npm (Node Package Manager)
+
+### Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/yourusername/movie-night.git
+   cd movie-night
+
+2. Install dependencies:
+npm install
+
+3. Create a .env.local file in the root of your project and add your TMDb API key:
+TMDB_API_KEY=your_api_key_here
+
+4. Start the development server:
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+5. Open your browser and navigate to http://localhost:3000 to view the application.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+Usage
+# Use the search bar in the navigation to find movies.
+# Click on the heart icon to like a movie. Liked movies will be stored in local storage.
+# Click on any movie card to view more details.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
